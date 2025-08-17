@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="si">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WhatsApp Share • 5 Buttons</title>
+    <style>
+      :root {
+        --bg1: #0f172a;
+        --bg2: #1e293b;
+        --btn-bg: #25d366;
+        --btn-hover: #20bd5a;
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+      }
+      html, body { height: 100%; margin: 0; }
+      body {
+        display: flex; justify-content: center; align-items: center;
+        font-family: system-ui, sans-serif;
+        background: linear-gradient(160deg, var(--bg1), var(--bg2));
+        color: var(--text);
+      }
+      .container {
+        text-align: center;
+        background: rgba(255,255,255,0.05);
+        padding: 2rem;
+        border-radius: 1.25rem;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        max-width: 500px;
+        width: 90%;
+      }
+      h1 { margin-bottom: 1rem; font-size: 1.8rem; }
+      p { margin-bottom: 2rem; color: var(--muted); }
+      .btn-grid {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 1rem;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.9rem 1.3rem;
+        border-radius: 999px;
+        background: var(--btn-bg);
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        font-size: 1.05rem;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.35);
+      }
+      .btn:hover {
+        background: var(--btn-hover);
+        transform: translateY(-3px) scale(1.02);
+      }
+      #nextBtn {
+        margin-top: 2rem;
+        display: none;
+        background: linear-gradient(45deg,#38bdf8,#22d3ee);
+        color: #001018;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .show {
+        display: inline-block !important;
+        animation: fadeIn 0.4s ease forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Share Link</h1>
+      <p>Whatsapp Group 5 ඔබ <strong>Share කර පසු ඔබගේ</strong> පහත Cotinue   
+      බටන් එක Clik කරන්න!</p>
+
+      <div class="btn-grid">
+        <a href="#" class="btn shareBtn">Share</a>
+        <a href="#" class="btn shareBtn">Share</a>
+        <a href="#" class="btn shareBtn">Share</a>
+        <a href="#" class="btn shareBtn">Share</a>
+        <a href="#" class="btn shareBtn">Share</a>
+      </div>
+
+      <a href="/app2/mine.html" id="nextBtn" class="btn">Continue</a>
+    </div>
+
+    <script>
+      const shareBtns = document.querySelectorAll(".shareBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const linkToShare = "www.google.com";
+
+      let sharedCount = 0;
+
+      shareBtns.forEach((btn, i) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          window.open(
+            `https://api.whatsapp.com/send?text=${encodeURIComponent(linkToShare)}`,
+            "_blank"
+          );
+
+          // disable button after click
+          btn.textContent = `Shared ${i+1}`;
+          btn.style.background = "#64748b";
+          btn.style.pointerEvents = "none";
+
+          sharedCount++;
+          if (sharedCount === 5) {
+            nextBtn.classList.add("show");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
